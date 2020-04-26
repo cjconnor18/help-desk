@@ -92,7 +92,7 @@ public class AuthenticationController {
 
         User theUser = userRepository.findByUsername(loginFormDTO.getUsername());
         if(theUser == null) {
-            errors.rejectValue("username", "user.invalid", "The given username does not exist.");
+            errors.rejectValue("username", "user.invalid", "Invalid username.");
             return "index";
         }
 

@@ -44,3 +44,7 @@ nav ul li a:hover{
 main{
   margin: 1em 25%;
 }
+
+.errors {
+  color: #ff0000;
+}
