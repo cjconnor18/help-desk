@@ -10,12 +10,18 @@
 </div>
 <main>
     <h1>Welcome!!</h1>
-    <ul>
-        <li><a href="user/logIn.html">Log In</a></li>
+    <form method="post">
+        <label>Username
+            <input th:field="${loginFormDTO.username}" />
+        </label>
+        <label>Password
+            <input type="password" th:field="${loginFormDTO.password}" />
+        </label>
+        <input type="submit" value="Login">
+    </form>
 
 
-        <li><a href="user/create.html">Register New User</a></li>
-    </ul>
+    <p><a href="user/create.html">Register New User</a></p>
     <p>
         Welcome to the help desk. Please log in. Once logged in, you will be able to create, view, and close tickets. Please use this application to log any issues you may have with your technology.
     </p>

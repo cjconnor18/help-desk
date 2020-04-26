@@ -2,6 +2,7 @@ package com.cSquared.helpDesk.controller;
 
 import com.cSquared.helpDesk.data.UserRepository;
 import com.cSquared.helpDesk.models.User;
+import com.cSquared.helpDesk.models.dto.LoginFormDTO;
 import com.cSquared.helpDesk.models.dto.RegisterFormDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -74,7 +75,11 @@ public class AuthenticationController {
         return "redirect:";
     }
 
-
+    @GetMapping
+    public String displayLoginForm(Model model) {
+        model.addAttribute(new LoginFormDTO());
+        return "index";
+    }
 
 
 }
