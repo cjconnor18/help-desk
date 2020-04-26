@@ -1,23 +1,27 @@
 package com.cSquared.helpDesk.models;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 @Entity
-public class User {
+public class User extends AbstractEntity{
 
-    @GeneratedValue
-    @Id
-    private int id;
+    @NotNull
     private String username;
 
-    public User(String username) {
-        this.username = username;
-    }
+    @NotNull
+    private String pwHash;
 
-    public int getId() {
-        return id;
+    private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+    public User(String username, String password) {
+        this.username = username;
+        this.pwHash = encoder.encode(password);
     }
 
     public String getUsername() {
@@ -27,4 +31,9 @@ public class User {
     public void setUsername(String username) {
         this.username = username;
     }
+
+    public boolean isMatchingPassword(String password) {
+        return encoder.matches(password, pwHash);
+    }
+
 }
