@@ -12,15 +12,15 @@
         <label>Username
             <input type="text" th:field="${registerFormDTO.username}" />
         </label>
-        <p th:errors="${registerFormDTO.username}"></p>
+        <p class="errors" th:errors="${registerFormDTO.username}"></p>
         <label>
             <input type="password" th:field="${registerFormDTO.password}" />
         </label>
-        <p th:errors="${registerFormDTO.password}"></p>
+        <p class="errors" th:errors="${registerFormDTO.password}"></p>
         <label>
             <input type="password" th:field="${registerFormDTO.verifyPassword}" />
         </label>
-        <p th:errors="${registerFormDTO.verifyPassword}"></p>
+        <p class="errors" th:errors="${registerFormDTO.verifyPassword}"></p>
         <input type="submit" value="Register New User">
     </form>
     
