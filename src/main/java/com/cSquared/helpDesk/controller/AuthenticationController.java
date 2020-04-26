@@ -49,7 +49,8 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public String processRegistrationForm(@ModelAttribute @Valid RegisterFormDTO registerFormDTO,
-                        Errors errors, HttpServletRequest request, Model model) {
+                                          Errors errors, HttpServletRequest request,
+                                          Model model) {
 
         if(errors.hasErrors()) {
             return "register";
@@ -79,6 +80,31 @@ public class AuthenticationController {
     public String displayLoginForm(Model model) {
         model.addAttribute(new LoginFormDTO());
         return "index";
+    }
+
+    @PostMapping
+    public String processLoginForm(@ModelAttribute @Valid LoginFormDTO loginFormDTO,
+                                   Errors errors, HttpServletRequest request,
+                                   Model model) {
+        if(errors.hasErrors()) {
+            return "index";
+        }
+
+        User theUser = userRepository.findByUsername(loginFormDTO.getUsername());
+        if(theUser == null) {
+            errors.rejectValue("username", "user.invalid", "The given username does not exist.");
+            return "index";
+        }
+
+        String password = loginFormDTO.getPassword();
+        if(!theUser.isMatchingPassword(password)) {
+            errors.rejectValue("password", "password.invalid", "Invalid password.");
+            return "index";
+        }
+
+        setUserInSession(request.getSession(), theUser);
+
+        return "redirect:ticket/";
     }
 
 

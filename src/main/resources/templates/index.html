@@ -14,9 +14,11 @@
         <label>Username
             <input th:field="${loginFormDTO.username}" />
         </label>
+        <p th:errors="${loginFormDTO.username}"></p>
         <label>Password
             <input type="password" th:field="${loginFormDTO.password}" />
         </label>
+        <p th:errors="${loginFormDTO.password}"></p>
         <input type="submit" value="Login">
     </form>
 
