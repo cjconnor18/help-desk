@@ -1,16 +1,38 @@
-main h1{
+h1{
   text-align: center;
   padding-bottom: 1em;
 }
-main ul{
+main{
+  margin: 0 25%;
+
+}
+
+form{
+  margin: 0 25%;
+}
+
+label{
+  margin-top: .7em;
+  display: block;
+}
+
+input[type="text"],input[type="password"]{
+  width: 100%;
+  margin: .2em 0;
+  padding: .5em;
+}
+
+.submit {
+  padding: .5em 3em;
+  display: block;
+  margin: 2em auto 2em auto;
+}
+.submit:hover{
+  cursor: pointer;
+  color: white;
+  background-color: blue;
+}
+.newUser{
   text-align: center;
-  list-style:none;
-}
-main ul li a{
-  display: inline-block;
-  padding: 1em;
-}
-main p{
-  margin-top: 1em;
-  margin-bottom: 1em;
+  margin-bottom: 2em;
 }

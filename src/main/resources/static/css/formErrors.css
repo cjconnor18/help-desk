@@ -1,0 +1,6 @@
+.errors {
+  display: block;
+  color: #ff0000;
+  font-size: .90em;
+  text-align: left;
+}
