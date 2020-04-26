@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <th:fragment="head">
+        <meta charset="UTF-8"/>
+        <link rel="stylesheet" th:href="@{/css/navBar.css}">
+        <link rel="stylesheet" th:href="@{/css/home.css}">
+        <title></title>
+    </th:fragment>
+</head>
+
+<body>
+<div class="headerNav" th:fragment="headerNav">
+    <header>
+        <p>CSquared</p>
+    </header>
+    <nav>
+        <ul>
+            <li><a th:href="@{/}">Home</a></li>
+            <li><a href="ticket/create.html">Create Ticket</a></li>
+            <li><a href="ticket/view.html">View Tickets</a></li>
+            <li class="logInLogOut"><a href="user/login">LogIn</a></li>
+            <li class="logInLogOut"><a href="user/logout">LogOut</a></li>
+        </ul>
+    </nav>
+</div>
+
+</body>
+</html>

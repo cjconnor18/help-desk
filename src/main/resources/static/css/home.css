@@ -1,0 +1,16 @@
+main h1{
+  text-align: center;
+  padding-bottom: 1em;
+}
+main ul{
+  text-align: center;
+  list-style:none;
+}
+main ul li a{
+  display: inline-block;
+  padding: 1em;
+}
+main p{
+  margin-top: 1em;
+  margin-bottom: 1em;
+}

@@ -1,0 +1,46 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+body{
+  color: black;
+  background-color: aliceblue;
+  font-size: 18px;
+}
+.headerNav{
+  display: block;
+  overflow: auto;
+}
+header{
+  float: left;
+  color: white;
+  background-color: darkblue;
+  padding: 3em;
+}
+
+nav {
+  color: white;
+  background-color: darkblue;
+}
+nav ul{
+  list-style: none;
+}
+nav ul li{
+  display: inline-block;
+}
+nav ul li a{
+  display: block;
+  color: white;
+  text-decoration: none;
+  padding: 1em;
+}
+nav ul li a:hover{
+  color: darkblue;
+  background-color: aliceblue;
+}
+.logInLogOut{
+  float: right;
+}
+main{
+  margin: 1em 25%;
+}
