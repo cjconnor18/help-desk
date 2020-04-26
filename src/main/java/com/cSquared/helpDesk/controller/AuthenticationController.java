@@ -107,5 +107,10 @@ public class AuthenticationController {
         return "redirect:ticket/";
     }
 
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request) {
+        request.getSession().invalidate();
+        return "redirect:";
+    }
 
 }
