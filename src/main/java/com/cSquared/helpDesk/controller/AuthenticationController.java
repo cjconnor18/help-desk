@@ -11,6 +11,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -18,6 +19,7 @@ import javax.validation.Valid;
 import java.util.Optional;
 
 @Controller
+@RequestMapping("")
 public class AuthenticationController {
 
     @Autowired
@@ -39,6 +41,10 @@ public class AuthenticationController {
 
     private static void setUserInSession(HttpSession session, User user) {
         session.setAttribute(userSessionKey, user.getId());
+    }
+    @GetMapping
+    public String displayPageAfterLogin() {
+        return "index";
     }
 
     @GetMapping("/register")
@@ -71,46 +77,45 @@ public class AuthenticationController {
 
         User newUser = new User(registerFormDTO.getUsername(), registerFormDTO.getPassword());
         userRepository.save(newUser);
-        setUserInSession(request.getSession(), newUser);
 
-        return "redirect:";
+        return "redirect:login";
     }
 
-    @GetMapping
+    @GetMapping("login")
     public String displayLoginForm(Model model) {
         model.addAttribute(new LoginFormDTO());
-        return "index";
+        return "login";
     }
 
-    @PostMapping
+    @PostMapping("login")
     public String processLoginForm(@ModelAttribute @Valid LoginFormDTO loginFormDTO,
                                    Errors errors, HttpServletRequest request,
                                    Model model) {
         if(errors.hasErrors()) {
-            return "index";
+            return "login";
         }
 
         User theUser = userRepository.findByUsername(loginFormDTO.getUsername());
         if(theUser == null) {
             errors.rejectValue("username", "user.invalid", "Invalid username.");
-            return "index";
+            return "login";
         }
 
         String password = loginFormDTO.getPassword();
         if(!theUser.isMatchingPassword(password)) {
             errors.rejectValue("password", "password.invalid", "Invalid password.");
-            return "index";
+            return "login";
         }
 
         setUserInSession(request.getSession(), theUser);
 
-        return "redirect:ticket/";
+        return "redirect:";
     }
 
     @GetMapping("/logout")
     public String logout(HttpServletRequest request) {
         request.getSession().invalidate();
-        return "redirect:";
+        return "redirect:login";
     }
 
 }
