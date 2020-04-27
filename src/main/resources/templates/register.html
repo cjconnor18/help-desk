@@ -23,6 +23,22 @@
             <input type="password" th:field="${registerFormDTO.verifyPassword}" />
         </label>
         <p class="errors" th:errors="${registerFormDTO.verifyPassword}"></p>
+        <label>First Name
+            <input type="text" th:field="${userProfile.firstName}" />
+        </label>
+        <p class="errors" th:errors="${userProfile.firstName}"></p>
+        <label>Last Name
+            <input type="text" th:field="${userProfile.lastName}" />
+        </label>
+        <p class="errors" th:errors="${userProfile.lastName}"></p>
+        <label>E-mail
+            <input type="text" th:field="${userProfile.email}" />
+        </label>
+        <p class="errors" th:errors="${userProfile.email}"></p>
+        <label>Phone Number
+            <input type="text" th:field="${userProfile.phoneNumber}" />
+        </label>
+        <p class="errors" th:errors="${userProfile.phoneNumber}"></p>
         <input type="submit" value="Register New User" class="submit">
     </form>
     

@@ -2,6 +2,7 @@ package com.cSquared.helpDesk.controller;
 
 import com.cSquared.helpDesk.data.UserRepository;
 import com.cSquared.helpDesk.models.User;
+import com.cSquared.helpDesk.models.UserProfile;
 import com.cSquared.helpDesk.models.dto.LoginFormDTO;
 import com.cSquared.helpDesk.models.dto.RegisterFormDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,11 +51,13 @@ public class AuthenticationController {
     @GetMapping("/register")
     public String displayRegistrationForm(Model model) {
         model.addAttribute(new RegisterFormDTO());
+        model.addAttribute(new UserProfile());
         return "register";
     }
 
     @PostMapping("/register")
     public String processRegistrationForm(@ModelAttribute @Valid RegisterFormDTO registerFormDTO,
+                                          @ModelAttribute @Valid UserProfile userProfile,
                                           Errors errors, HttpServletRequest request,
                                           Model model) {
 
@@ -75,7 +78,7 @@ public class AuthenticationController {
             return "register";
         }
 
-        User newUser = new User(registerFormDTO.getUsername(), registerFormDTO.getPassword());
+        User newUser = new User(registerFormDTO.getUsername(), registerFormDTO.getPassword(), userProfile);
         userRepository.save(newUser);
 
         return "redirect:login";
