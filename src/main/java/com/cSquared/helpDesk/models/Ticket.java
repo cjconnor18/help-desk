@@ -63,4 +63,14 @@ public class Ticket extends AbstractEntity {
     public void setUserCreated(User userCreated) {
         this.userCreated = userCreated;
     }
+
+    @Override
+    public String toString() {
+        return "Ticket{" +
+                "title='" + title + '\'' +
+                ", dateCreated=" + dateCreated +
+                ", description='" + description + '\'' +
+                ", userCreated=" + userCreated +
+                '}';
+    }
 }
