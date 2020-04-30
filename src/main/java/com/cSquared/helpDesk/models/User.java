@@ -5,6 +5,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -22,6 +24,9 @@ public class User extends AbstractEntity{
     @Valid
     @NotNull
     private UserProfile userProfile;
+
+    @OneToMany(mappedBy = "userCreated")
+    private final List<Ticket> tickets = new ArrayList<>();
 
     public User(String username, String password) {
         this.username = username;
@@ -52,5 +57,9 @@ public class User extends AbstractEntity{
 
     public void setUserProfile(UserProfile userProfile) {
         this.userProfile = userProfile;
+    }
+
+    public List<Ticket> getTickets() {
+        return tickets;
     }
 }

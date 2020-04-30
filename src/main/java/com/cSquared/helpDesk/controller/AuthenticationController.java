@@ -27,6 +27,7 @@ public class AuthenticationController {
     UserRepository userRepository;
 
     private static final String userSessionKey = "user";
+
     public User getUserFromSession(HttpSession session) {
         Integer userId = (Integer) session.getAttribute(userSessionKey);
         if (userId == null) {
@@ -111,6 +112,7 @@ public class AuthenticationController {
         }
 
         setUserInSession(request.getSession(), theUser);
+
 
         return "redirect:";
     }
