@@ -10,9 +10,9 @@
     <table>
         <th:block th:each="ticket : ${tickets}">
             <tr>
-                <!--<td th:text="${ticket.date.format(standardDate, 'dd-MM-yyyy HH:mm')}"></td>-->
+                <td th:text="${ticket.dateCreated}"></td>
                 <td th:text="${ticket.title}"></td>
-                <td th:text="${ticket.user.userProfile.name}"></td>
+                <td th:text="${ticket.userCreated.userProfile.firstName}"></td>
                 <td th:text="${ticket.description}"></td>
             </tr>
         </th:block>

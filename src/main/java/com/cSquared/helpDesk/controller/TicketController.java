@@ -32,7 +32,7 @@ public class TicketController {
     @GetMapping
     public String displayTicketHome(Model model, HttpSession session){
         User user = authenticationController.getUserFromSession(session);
-
+        model.addAttribute("user", user);
         model.addAttribute("tickets", user.getTickets());
         return "ticket/index";
     }
