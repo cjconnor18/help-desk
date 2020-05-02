@@ -8,14 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
+import java.util.Optional;
 
 @RequestMapping("ticket")
 @Controller
@@ -54,5 +54,23 @@ public class TicketController {
         Ticket newTicket = new Ticket(ticket.getTitle(), ticket.getDescription(), user);
         ticketRepository.save(newTicket);
         return "redirect:";
+    }
+
+    @GetMapping("view/{ticketId}")
+    public String viewTicket (@PathVariable int ticketId, HttpSession session,
+                              Model model){
+
+
+
+        User user = authenticationController.getUserFromSession(session);
+        Optional<Ticket> ticket = ticketRepository.findById(ticketId);
+
+
+        if(ticket.isEmpty() || !ticket.get().getUserCreated().equals(user)){
+            return "ticket";
+        }
+
+        model.addAttribute("ticket", ticket.get());
+        return "ticket/view";
     }
 }

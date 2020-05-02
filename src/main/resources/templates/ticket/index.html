@@ -10,8 +10,9 @@
     <table>
         <th:block th:each="ticket : ${tickets}">
             <tr>
+                <td th:text="${ticket.id}"></td>
                 <td th:text="${ticket.dateCreated}"></td>
-                <td th:text="${ticket.title}"></td>
+                <td><a th:href="@{/ticket/view/{id}(id=${ticket.id})}" th:text="${ticket.title}"></a></td>
                 <td th:text="${ticket.userCreated.userProfile.firstName}"></td>
                 <td th:text="${ticket.description}"></td>
             </tr>

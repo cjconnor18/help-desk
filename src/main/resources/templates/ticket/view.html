@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <div th:replace="fragments :: head"></div>
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+</head>
+<body>
+<div class="headerNav" th:replace="fragments :: headerNav"></div>
+<main>
+    <p th:text="${ticket.id}"></p>
+    <p th:text="${ticket.dateCreated}"></p>
+    <p th:text="${ticket.title}"></p>
+    <p th:text="${ticket.userCreated.userProfile.firstName} + ' ' + ${ticket.userCreated.userProfile.lastName}"></p>
+    <p th:text="${ticket.description}"></p>
+</main>
+</body>
+</html>
