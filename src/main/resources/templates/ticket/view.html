@@ -7,11 +7,11 @@
 <body>
 <div class="headerNav" th:replace="fragments :: headerNav"></div>
 <main>
-    <p th:text="${ticket.id}"></p>
-    <p th:text="${ticket.dateCreated}"></p>
-    <p th:text="${ticket.title}"></p>
-    <p th:text="${ticket.userCreated.userProfile.firstName} + ' ' + ${ticket.userCreated.userProfile.lastName}"></p>
-    <p th:text="${ticket.description}"></p>
+    <p>Ticket Number: <span th:text="${ticket.id}"></span></p>
+    <p>Date Created: <span th:text="${ticket.dateCreated}"></span></p>
+    <p>Title: <span th:text="${ticket.title}"></span></p>
+    <p>Creator: <span th:text="${ticket.userCreated.userProfile.firstName} + ' ' + ${ticket.userCreated.userProfile.lastName}"></span></p>
+    <p>Description: <span th:text="${ticket.description}"></span></p>
 </main>
 </body>
 </html>

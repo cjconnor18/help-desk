@@ -8,6 +8,13 @@
 <div class="headerNav" th:replace="fragments :: headerNav"></div>
 <main>
     <table>
+        <tr>
+            <th>Ticket Number</th>
+            <th>Date</th>
+            <th>Title</th>
+            <th>User</th>
+            <th>Description</th>
+        </tr>
         <th:block th:each="ticket : ${tickets}">
             <tr>
                 <td th:text="${ticket.id}"></td>
