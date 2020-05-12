@@ -2,6 +2,7 @@ package com.cSquared.helpDesk.controller;
 
 import com.cSquared.helpDesk.data.TicketRepository;
 import com.cSquared.helpDesk.data.UserRepository;
+import com.cSquared.helpDesk.models.SeverityLevel;
 import com.cSquared.helpDesk.models.Ticket;
 import com.cSquared.helpDesk.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,7 @@ public class TicketController {
     @GetMapping("create")
     public String displayCreateForm(Model model) {
         model.addAttribute(new Ticket());
+        model.addAttribute("types", SeverityLevel.values());
         return "ticket/create";
     }
 
@@ -51,7 +53,7 @@ public class TicketController {
             return "ticket/create";
         }
         User user = authenticationController.getUserFromSession(session);
-        Ticket newTicket = new Ticket(ticket.getTitle(), ticket.getDescription(), user);
+        Ticket newTicket = new Ticket(ticket.getTitle(), ticket.getDescription(), user, ticket.getSeverity());
         ticketRepository.save(newTicket);
         return "redirect:";
     }

@@ -22,11 +22,14 @@ public class Ticket extends AbstractEntity {
     @ManyToOne
     private User userCreated;
 
-    public Ticket(String title, String description, User userCreated) {
+    private SeverityLevel severity;
+
+    public Ticket(String title, String description, User userCreated, SeverityLevel severity) {
         this.title = title;
         this.description = description;
         this.userCreated = userCreated;
         this.dateCreated = new Date();
+        this.severity = severity;
     }
 
     public Ticket() {
@@ -62,6 +65,14 @@ public class Ticket extends AbstractEntity {
 
     public void setUserCreated(User userCreated) {
         this.userCreated = userCreated;
+    }
+
+    public SeverityLevel getSeverity() {
+        return severity;
+    }
+
+    public void setSeverity(SeverityLevel severity) {
+        this.severity = severity;
     }
 
     @Override

@@ -10,6 +10,9 @@
     <form method="post">
         <label>Title<input type="text" th:field="${ticket.title}"></label>
         <label>Description<input type="text" th:field="${ticket.description}"></label>
+        <label>Severity <select th:field="${ticket.severity}">
+            <option th:each="type : ${types}" th:value="${type}" th:text="${type.displayName}"></option>
+        </select> </label>
         <input type="submit">
 
     </form>

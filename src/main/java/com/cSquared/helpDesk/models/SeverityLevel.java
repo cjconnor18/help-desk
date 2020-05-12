@@ -5,9 +5,9 @@ public enum SeverityLevel {
     LOW ("Low"),
     MEDIUM ("Medium"),
     HIGH ("High"),
-    VERYHIGH("Very High");
+    CRITICAL("Critical");
 
-    private String displayName;
+    private final String displayName;
 
     SeverityLevel(String displayName) {
         this.displayName = displayName;
@@ -17,7 +17,4 @@ public enum SeverityLevel {
         return displayName;
     }
 
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
-    }
 }
