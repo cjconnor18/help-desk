@@ -28,13 +28,22 @@ public class User extends AbstractEntity{
     @OneToMany(mappedBy = "userCreated")
     private final List<Ticket> tickets = new ArrayList<>();
 
+    private AccessLevel accessLevel;
+
     public User(String username, String password) {
         this.username = username;
         this.pwHash = encoder.encode(password);
     }
+
     public User(String username, String password, UserProfile userProfile) {
         this(username, password);
         this.userProfile = userProfile;
+        this.accessLevel = AccessLevel.USER;
+    }
+
+    public User(String username, String password, UserProfile userProfile, AccessLevel accessLevel) {
+        this(username, password, userProfile);
+        this.accessLevel = accessLevel;
     }
 
     public User() {};
@@ -61,5 +70,13 @@ public class User extends AbstractEntity{
 
     public List<Ticket> getTickets() {
         return tickets;
+    }
+
+    public AccessLevel getAccessLevel() {
+        return accessLevel;
+    }
+
+    public void setAccessLevel(AccessLevel accessLevel) {
+        this.accessLevel = accessLevel;
     }
 }

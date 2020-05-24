@@ -33,6 +33,7 @@ public class UserProfile extends AbstractEntity{
         this.phoneNumber = phoneNumber;
     }
 
+
     public UserProfile() {}
     public String getFirstName() {
         return firstName;
@@ -65,4 +66,5 @@ public class UserProfile extends AbstractEntity{
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+
 }

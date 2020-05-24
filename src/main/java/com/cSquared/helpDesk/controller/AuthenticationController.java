@@ -1,6 +1,7 @@
 package com.cSquared.helpDesk.controller;
 
 import com.cSquared.helpDesk.data.UserRepository;
+import com.cSquared.helpDesk.models.AccessLevel;
 import com.cSquared.helpDesk.models.User;
 import com.cSquared.helpDesk.models.UserProfile;
 import com.cSquared.helpDesk.models.dto.LoginFormDTO;
@@ -57,18 +58,19 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public String processRegistrationForm(@ModelAttribute @Valid RegisterFormDTO registerFormDTO,
-                                          @ModelAttribute @Valid UserProfile userProfile,
+    public String processRegistrationForm(@ModelAttribute @Valid UserProfile userProfile,
+                                          Errors error1,
+                                          @ModelAttribute @Valid RegisterFormDTO registerFormDTO,
                                           Errors errors, HttpServletRequest request,
                                           Model model) {
 
-        if(errors.hasErrors()) {
+        if(errors.hasErrors() || error1.hasErrors()) {
             return "register";
         }
 
         User existingUser = userRepository.findByUsername(registerFormDTO.getUsername());
-        if(existingUser != null) {
-            errors.rejectValue("username", "username.alreadyexists", "A user with that Username already exists.");
+        if (existingUser != null) {
+            errors.rejectValue("username", "username.alreadyexists", "Please choose a different username.");
             return "register";
         }
 
@@ -80,6 +82,9 @@ public class AuthenticationController {
         }
 
         User newUser = new User(registerFormDTO.getUsername(), registerFormDTO.getPassword(), userProfile);
+        if(userRepository.findByAccessLevel(AccessLevel.ADMIN) == null){
+            newUser.setAccessLevel(AccessLevel.ADMIN);
+        }
         userRepository.save(newUser);
 
         return "redirect:login";
