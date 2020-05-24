@@ -79,4 +79,11 @@ public class User extends AbstractEntity{
     public void setAccessLevel(AccessLevel accessLevel) {
         this.accessLevel = accessLevel;
     }
+
+    public Boolean isAdmin() {
+        if(this.getAccessLevel().getDisplayName().equals("Administrator")) {
+            return true;
+        }
+        return false;
+    }
 }

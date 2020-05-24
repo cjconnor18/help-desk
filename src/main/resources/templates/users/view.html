@@ -12,6 +12,7 @@
     <p>Phone Number: <span th:text="${user.userProfile.phoneNumber}"></span></p>
     <p>Email: <span th:text="${user.userProfile.email}"></span></p>
     <p>Access Level: <span th:text="${user.accessLevel.displayName}"></span></p>
+    <button th:if="${isAdmin}">Change Access Level</button>
 </main>
 </body>
 </html>

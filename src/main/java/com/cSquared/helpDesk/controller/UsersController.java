@@ -58,6 +58,9 @@ public class UsersController {
         } else {
             model.addAttribute("user", user.get());
         }
+
+        Boolean isAdmin = currentUser.isAdmin();
+        model.addAttribute("isAdmin", isAdmin);
         return "users/view";
     }
 
