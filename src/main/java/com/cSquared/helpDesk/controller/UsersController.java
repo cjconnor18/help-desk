@@ -49,22 +49,15 @@ public class UsersController {
         if(user.isEmpty()) {
             return "users/index";
         }
-
-
         if(currentUser.getAccessLevel() == AccessLevel.USER) {
             if(currentUser.getId() != user.get().getId()) {
-
                 return "users/index";
             } else {
                 model.addAttribute("user", currentUser);
             }
         } else {
-
             model.addAttribute("user", user.get());
         }
-
-
-
         return "users/view";
     }
 
