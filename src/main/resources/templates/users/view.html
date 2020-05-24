@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <div th:replace="fragments :: head"></div>
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+</head>
+<body>
+<div class="headerNav" th:replace="fragments :: headerNav"></div>
+<main>
+    <p>First Name: <span th:text="${user.userProfile.firstName}"></span></p>
+    <p>Last Name: <span th:text="${user.userProfile.lastName}"></span></p>
+    <p>Phone Number: <span th:text="${user.userProfile.phoneNumber}"></span></p>
+    <p>Email: <span th:text="${user.userProfile.email} + ' ' + ${ticket.userCreated.userProfile.lastName}"></span></p>
+    <p>Access Level: <span th:text="${user.accessLevel}"></span></p>
+</main>
+</body>
+</html>

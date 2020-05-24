@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <div th:replace="fragments :: head"></div>
+    <link rel="stylesheet" th:href="@{/css/formErrors.css}">
+</head>
+
+<body>
+<div class="headerNav" th:replace="fragments :: headerNav">
+
+</div>
+<main>
+    <h1>Users</h1>
+
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Access Level</th>
+        </tr>
+        <tr th:each="user : ${users}">
+            <td><a th:href="@{/users/view/{id}(id=${user.id})}"
+                   th:text="${user.userProfile.firstName} + ' ' + ${user.userProfile.lastName}"></a></td>
+            <td th:text="${user.userProfile.phoneNumber}"></td>
+            <td th:text="${user.userProfile.email}"></td>
+            <td th:text="${user.accessLevel}"></td>
+        </tr>
+    </table>
+    <!--<p th:errors="${userAccess}"></p>-->
+</main>
+</body>
+</html>
