@@ -1,9 +1,9 @@
 let changeForm = document.getElementById("changeForm");
 
 function clickedChangeFormButton() {
-  if(changeForm.style.display == "none") {
-    changeForm.style.display = "block";
-  } else {
+  if(changeForm.style.display == "block") {
     changeForm.style.display = "none";
+  } else {
+    changeForm.style.display = "block";
   }
 }
