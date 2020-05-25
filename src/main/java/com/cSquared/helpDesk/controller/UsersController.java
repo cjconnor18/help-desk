@@ -8,9 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
@@ -61,7 +59,21 @@ public class UsersController {
 
         Boolean isAdmin = currentUser.isAdmin();
         model.addAttribute("isAdmin", isAdmin);
+        model.addAttribute("levels", AccessLevel.values());
         return "users/view";
+    }
+
+    @PostMapping("view/{userId}")
+    public String changeAccessLevel(@PathVariable int userId, @RequestParam AccessLevel accessLevel){
+
+        Optional<User> optUser = userRepository.findById(userId);
+        if(optUser.isEmpty()) {
+            return "view/";
+        }
+        User user = optUser.get();
+        user.setAccessLevel(accessLevel);
+        userRepository.save(user);
+        return "redirect:/users/view/" + userId;
     }
 
 

@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org/">
 <head>
     <div th:replace="fragments :: head"></div>
-    <link rel="stylesheet" th:href="@{/css/home.css}">
+    <link rel="stylesheet" th:href="@{/css/userview.css}">
 </head>
 <body>
 <div class="headerNav" th:replace="fragments :: headerNav"></div>
@@ -12,7 +12,15 @@
     <p>Phone Number: <span th:text="${user.userProfile.phoneNumber}"></span></p>
     <p>Email: <span th:text="${user.userProfile.email}"></span></p>
     <p>Access Level: <span th:text="${user.accessLevel.displayName}"></span></p>
-    <button th:if="${isAdmin}">Change Access Level</button>
+    <button th:if="${isAdmin}" onclick="clickedChangeFormButton()">Change Access Level</button>
+    <form method="post" th:action="@{/users/view/{id}(id=${user.id})}" id="changeForm">
+
+        <label>Access Level<select name="accessLevel">
+            <option th:each="level : ${levels}" th:value="${level}" th:text="${level.displayName}"></option>
+        </select> </label>
+        <input type="submit" value="Submit Change">
+    </form>
 </main>
+<script th:src="@{/js/userview.js}"></script>
 </body>
 </html>
