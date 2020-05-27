@@ -24,12 +24,15 @@ public class Ticket extends AbstractEntity {
 
     private SeverityLevel severity;
 
+    private StatusLevel statusLevel;
+
     public Ticket(String title, String description, User userCreated, SeverityLevel severity) {
         this.title = title;
         this.description = description;
         this.userCreated = userCreated;
         this.dateCreated = new Date();
         this.severity = severity;
+        this.statusLevel = StatusLevel.UNASSIGNED;
     }
 
     public Ticket() {
@@ -73,6 +76,14 @@ public class Ticket extends AbstractEntity {
 
     public void setSeverity(SeverityLevel severity) {
         this.severity = severity;
+    }
+
+    public StatusLevel getStatusLevel() {
+        return statusLevel;
+    }
+
+    public void setStatusLevel(StatusLevel statusLevel) {
+        this.statusLevel = statusLevel;
     }
 
     @Override

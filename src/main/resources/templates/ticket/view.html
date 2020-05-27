@@ -10,7 +10,9 @@
     <p>Ticket Number: <span th:text="${ticket.id}"></span></p>
     <p>Date Created: <span th:text="${ticket.dateCreated}"></span></p>
     <p>Title: <span th:text="${ticket.title}"></span></p>
+
     <p>Creator: <span th:text="${ticket.userCreated.userProfile.firstName} + ' ' + ${ticket.userCreated.userProfile.lastName}"></span></p>
+    <p>Status: <span th:text="${ticket.statusLevel.displayName}"></span></p>
     <p>Description: <span th:text="${ticket.description}"></span></p>
 </main>
 </body>

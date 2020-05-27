@@ -14,7 +14,7 @@
             <th>Severity</th>
             <th>Title</th>
             <th>User</th>
-            <th>Description</th>
+            <th>Status</th>
         </tr>
         <th:block th:each="ticket : ${tickets}">
             <tr>
@@ -23,7 +23,7 @@
                 <td th:text="${ticket.severity.displayName}"></td>
                 <td><a th:href="@{/ticket/view/{id}(id=${ticket.id})}" th:text="${ticket.title}"></a></td>
                 <td th:text="${ticket.userCreated.userProfile.firstName}"></td>
-                <td th:text="${ticket.description}"></td>
+                <td th:text="${ticket.statusLevel.displayName}"></td>
             </tr>
         </th:block>
 
