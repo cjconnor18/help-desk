@@ -3,6 +3,7 @@ package com.cSquared.helpDesk.controller;
 import com.cSquared.helpDesk.data.TicketRepository;
 import com.cSquared.helpDesk.data.UserRepository;
 import com.cSquared.helpDesk.models.SeverityLevel;
+import com.cSquared.helpDesk.models.StatusLevel;
 import com.cSquared.helpDesk.models.Ticket;
 import com.cSquared.helpDesk.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,6 +74,21 @@ public class TicketController {
         }
 
         model.addAttribute("ticket", ticket.get());
+        model.addAttribute("statusLevels", StatusLevel.values());
         return "ticket/view";
+    }
+
+    @PostMapping("view/{ticketId}")
+    public String updateTicket (@PathVariable int ticketId, @RequestParam StatusLevel statusLevelChosen, Model model) {
+        Optional<Ticket> ticket = ticketRepository.findById(ticketId);
+        if(ticket.isEmpty()) {
+            return "index";
+        }
+        Ticket currentTicket = ticket.get();
+        currentTicket.setStatusLevel(statusLevelChosen);
+        ticketRepository.save(currentTicket);
+
+        return "redirect:/ticket/view/" + ticketId;
+
     }
 }

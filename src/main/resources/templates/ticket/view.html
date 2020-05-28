@@ -14,6 +14,18 @@
     <p>Creator: <span th:text="${ticket.userCreated.userProfile.firstName} + ' ' + ${ticket.userCreated.userProfile.lastName}"></span></p>
     <p>Status: <span th:text="${ticket.statusLevel.displayName}"></span></p>
     <p>Description: <span th:text="${ticket.description}"></span></p>
+
+    <form th:action="@{/ticket/view/{id}(id=${ticket.id})}" method="post">
+        <Label>
+            <select name="statusLevelChosen">
+                <th:block th:each="statusLevel : ${statusLevels}">
+                    <option th:if="${statusLevel.equals(ticket.statusLevel)}" th:value="${statusLevel}" th:text="${statusLevel.displayName}" selected></option>
+                    <option th:unless="${statusLevel.equals(ticket.statusLevel)}" th:value="${statusLevel}" th:text="${statusLevel.displayName}"></option>
+                </th:block>
+            </select>
+        </Label>
+        <input type="submit" value="Change Status">
+    </form>
 </main>
 </body>
 </html>
