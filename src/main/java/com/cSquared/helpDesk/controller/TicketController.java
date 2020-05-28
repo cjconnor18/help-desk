@@ -2,10 +2,7 @@ package com.cSquared.helpDesk.controller;
 
 import com.cSquared.helpDesk.data.TicketRepository;
 import com.cSquared.helpDesk.data.UserRepository;
-import com.cSquared.helpDesk.models.SeverityLevel;
-import com.cSquared.helpDesk.models.StatusLevel;
-import com.cSquared.helpDesk.models.Ticket;
-import com.cSquared.helpDesk.models.User;
+import com.cSquared.helpDesk.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,8 +31,14 @@ public class TicketController {
     @GetMapping
     public String displayTicketHome(Model model, HttpSession session){
         User user = authenticationController.getUserFromSession(session);
+
+        if(user.getAccessLevel().equals(AccessLevel.ADMIN)) {
+            model.addAttribute("tickets", ticketRepository.findAll());
+        } else {
+            model.addAttribute("tickets", user.getTickets());
+        }
+
         model.addAttribute("user", user);
-        model.addAttribute("tickets", user.getTickets());
         return "ticket/index";
     }
 
