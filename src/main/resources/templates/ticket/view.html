@@ -8,7 +8,7 @@
 <div class="headerNav" th:replace="fragments :: headerNav"></div>
 <main>
     <p>Ticket Number: <span th:text="${ticket.id}"></span></p>
-    <p>Date Created: <span th:text="${ticket.dateCreated}"></span></p>
+    <p>Date Created: <span th:text="${ticket.dateCreatedString}"></span></p>
     <p>Title: <span th:text="${ticket.title}"></span></p>
 
     <p>Creator: <span th:text="${ticket.userCreated.userProfile.firstName} + ' ' + ${ticket.userCreated.userProfile.lastName}"></span></p>

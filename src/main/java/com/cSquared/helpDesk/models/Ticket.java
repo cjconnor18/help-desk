@@ -1,10 +1,14 @@
 package com.cSquared.helpDesk.models;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 
 @Entity
 public class Ticket extends AbstractEntity {
@@ -13,7 +17,8 @@ public class Ticket extends AbstractEntity {
     @Size(min = 3, max = 50, message = "Title must be between 3 and 50 characters.")
     private String title;
 
-    private Date dateCreated;
+    private LocalDateTime dateCreated;
+    private String dateCreatedString;
 
     @NotBlank(message = "Description is required.")
     @Size(min = 3, max = 500, message = "Description must be between 3 and 500 characters.")
@@ -30,7 +35,8 @@ public class Ticket extends AbstractEntity {
         this.title = title;
         this.description = description;
         this.userCreated = userCreated;
-        this.dateCreated = new Date();
+        this.dateCreated = LocalDateTime.now();
+        this.dateCreatedString = dateCreated.format(DateTimeFormatter.ofPattern("MMM dd',' yyyy h:mm a"));
         this.severity = severity;
         this.statusLevel = StatusLevel.UNASSIGNED;
     }
@@ -46,11 +52,11 @@ public class Ticket extends AbstractEntity {
         this.title = title;
     }
 
-    public Date getDateCreated() {
+    public LocalDateTime getDateCreated() {
         return dateCreated;
     }
 
-    public void setDateCreated(Date dateCreated) {
+    public void setDateCreated(LocalDateTime dateCreated) {
         this.dateCreated = dateCreated;
     }
 
@@ -86,6 +92,14 @@ public class Ticket extends AbstractEntity {
         this.statusLevel = statusLevel;
     }
 
+    public String getDateCreatedString() {
+        return dateCreatedString;
+    }
+
+    public void setDateCreatedString(String dateCreatedString) {
+        this.dateCreatedString = dateCreatedString;
+    }
+
     @Override
     public String toString() {
         return "Ticket{" +
@@ -95,4 +109,6 @@ public class Ticket extends AbstractEntity {
                 ", userCreated=" + userCreated +
                 '}';
     }
+
+
 }
