@@ -59,7 +59,7 @@ public class TicketController {
         User user = authenticationController.getUserFromSession(session);
         Ticket newTicket = new Ticket(ticket.getTitle(), ticket.getDescription(), user, ticket.getSeverity());
         ticketRepository.save(newTicket);
-        return "redirect:";
+        return "redirect:/ticket/";
     }
 
     @GetMapping("view/{ticketId}")
@@ -72,8 +72,8 @@ public class TicketController {
         Optional<Ticket> ticket = ticketRepository.findById(ticketId);
 
 
-        if(ticket.isEmpty() || !ticket.get().getUserCreated().equals(user)){
-            return "ticket";
+        if(ticket.isEmpty() || (!ticket.get().getUserCreated().equals(user) && !user.isAdmin())){
+            return "redirect:/ticket/";
         }
 
         model.addAttribute("ticket", ticket.get());
@@ -85,7 +85,7 @@ public class TicketController {
     public String updateTicket (@PathVariable int ticketId, @RequestParam StatusLevel statusLevelChosen, Model model) {
         Optional<Ticket> ticket = ticketRepository.findById(ticketId);
         if(ticket.isEmpty()) {
-            return "index";
+            return "ticket/index";
         }
         Ticket currentTicket = ticket.get();
         currentTicket.setStatusLevel(statusLevelChosen);
