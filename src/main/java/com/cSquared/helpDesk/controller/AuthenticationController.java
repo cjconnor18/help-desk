@@ -85,6 +85,7 @@ public class AuthenticationController {
         if(userRepository.findByAccessLevel(AccessLevel.ADMIN) == null){
             newUser.setAccessLevel(AccessLevel.ADMIN);
         }
+
         userRepository.save(newUser);
 
         return "redirect:login";
