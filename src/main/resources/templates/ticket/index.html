@@ -2,12 +2,12 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org/">
 <head>
     <div th:replace="fragments :: head"></div>
-    <link rel="stylesheet" th:href="@{/css/home.css}">
+    <link rel="stylesheet" th:href="@{/css/ticketindex.css}">
 </head>
 <body>
 <div class="headerNav" th:replace="fragments :: headerNav"></div>
 <main>
-    <div th:unless='${user.accessLevel.displayName.equals("User")}'>
+    <div class="unassignedTable" th:unless='${user.accessLevel.displayName.equals("User")}'>
         <h2>Unassigned Tickets</h2>
         <table>
             <tr th:replace="fragments :: trHeaders"></tr>
@@ -17,7 +17,7 @@
         </table>
     </div>
 
-    <div>
+    <div class="openTable">
         <h2>
             <span th:if='${user.accessLevel.displayName.equals("Administrator")}'>All Open Tickets</span>
             <span th:unless='${user.accessLevel.displayName.equals("Administrator")}'>My Open Tickets</span>
@@ -32,7 +32,7 @@
         </table>
     </div>
 
-    <div>
+    <div class="closedTable">
         <h2>Closed Tickets</h2>
         <table>
             <tr th:replace="fragments :: trHeaders">

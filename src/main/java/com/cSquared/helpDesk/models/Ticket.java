@@ -3,7 +3,6 @@ package com.cSquared.helpDesk.models;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
@@ -39,7 +38,7 @@ public class Ticket extends AbstractEntity {
         this.description = description;
         this.userCreated = userCreated;
         this.dateCreated = LocalDateTime.now();
-        this.dateCreatedString = dateCreated.format(DateTimeFormatter.ofPattern("MMM dd',' yyyy h:mm a"));
+        this.dateCreatedString = dateCreated.format(DateTimeFormatter.ofPattern("MMM dd',' yyyy"));
         this.severity = severity;
         this.statusLevel = StatusLevel.UNASSIGNED;
     }

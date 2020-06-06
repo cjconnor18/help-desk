@@ -1,0 +1,31 @@
+.unassignedTable,.openTable,.closedTable{
+    margin-bottom: 3em;
+}
+
+table {
+    width: 100%;
+}
+
+h2 {
+    text-align: center;
+}
+
+.title{
+    width: 30%;
+}
+
+.date{
+    width: 17%;
+}
+
+.severity, .status{
+    width: 15%;
+}
+.user{
+    width: 23%;
+}
+
+.dateTd, .severityTd, .statusTd, .userTd {
+    text-align: center;
+}
+

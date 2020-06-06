@@ -25,20 +25,18 @@
 </div>
 
 <tr th:fragment="trHeaders">
-    <th>Ticket Number</th>
-    <th>Date</th>
-    <th>Severity</th>
-    <th>Title</th>
-    <th>User</th>
-    <th>Status</th>
+    <th class="title">Title</th>
+    <th class="date">Date</th>
+    <th class="severity">Severity</th>
+    <th class="status">Status</th>
+    <th class="user">User</th>
 </tr>
 <tr th:fragment="trTicket">
-    <td th:text="${ticket.id}"></td>
-    <td th:text="${ticket.dateCreatedString}"></td>
-    <td th:text="${ticket.severity.displayName}"></td>
-    <td><a th:href="@{/ticket/view/{id}(id=${ticket.id})}" th:text="${ticket.title}"></a></td>
-    <td th:text="${ticket.userCreated.userProfile.firstName}"></td>
-    <td th:text="${ticket.statusLevel.displayName}"></td>
+    <td class="titleTd"><a th:href="@{/ticket/view/{id}(id=${ticket.id})}" th:text="${ticket.title}"></a></td>
+    <td class="dateTd" th:text="${ticket.dateCreatedString}"></td>
+    <td class="severityTd" th:text="${ticket.severity.displayName}"></td>
+    <td class="statusTd" th:text="${ticket.statusLevel.displayName}"></td>
+    <td class="userTd" th:text="${ticket.userCreated.userProfile.firstName} + ' ' + ${ticket.userCreated.userProfile.lastName}"></td>
 </tr>
 
 </body>
