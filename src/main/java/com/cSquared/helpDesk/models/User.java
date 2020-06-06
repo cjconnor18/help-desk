@@ -28,6 +28,9 @@ public class User extends AbstractEntity{
     @OneToMany(mappedBy = "userCreated")
     private final List<Ticket> tickets = new ArrayList<>();
 
+    @OneToMany(mappedBy = "techAssigned")
+    private final List<Ticket> techTickets = new ArrayList<>();
+
     private AccessLevel accessLevel;
 
     public User(String username, String password) {
@@ -80,10 +83,48 @@ public class User extends AbstractEntity{
         this.accessLevel = accessLevel;
     }
 
+    public List<Ticket> getTechTickets() {
+        return techTickets;
+    }
+
     public Boolean isAdmin() {
         if(this.getAccessLevel().getDisplayName().equals("Administrator")) {
             return true;
         }
         return false;
     }
+
+    public List<Ticket> allTickets() {
+        List<Ticket> everyTicket = new ArrayList<>();
+
+        everyTicket.addAll(tickets);
+        for(Ticket ticket: techTickets) {
+            if(!everyTicket.contains(ticket)) {
+                everyTicket.add(ticket);
+            }
+        }
+        return everyTicket;
+    }
+
+    public List<Ticket> allClosedTickets() {
+        List<Ticket> closedTickets = new ArrayList<>();
+        for (Ticket ticket : allTickets()) {
+            if(ticket.getStatusLevel().equals(StatusLevel.CLOSED)) {
+                closedTickets.add(ticket);
+            }
+        }
+        return closedTickets;
+    }
+
+    public List<Ticket> allOpenTickets() {
+        List<Ticket> openTickets = new ArrayList<>();
+        for(Ticket ticket : allTickets()) {
+            if(ticket.getStatusLevel().equals(StatusLevel.ACTIVE) ||
+                    ticket.getStatusLevel().equals(StatusLevel.UNASSIGNED)) {
+                openTickets.add(ticket);
+            }
+        }
+        return openTickets;
+    }
+
 }

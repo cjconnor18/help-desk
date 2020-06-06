@@ -24,5 +24,22 @@
     </nav>
 </div>
 
+<tr th:fragment="trHeaders">
+    <th>Ticket Number</th>
+    <th>Date</th>
+    <th>Severity</th>
+    <th>Title</th>
+    <th>User</th>
+    <th>Status</th>
+</tr>
+<tr th:fragment="trTicket">
+    <td th:text="${ticket.id}"></td>
+    <td th:text="${ticket.dateCreatedString}"></td>
+    <td th:text="${ticket.severity.displayName}"></td>
+    <td><a th:href="@{/ticket/view/{id}(id=${ticket.id})}" th:text="${ticket.title}"></a></td>
+    <td th:text="${ticket.userCreated.userProfile.firstName}"></td>
+    <td th:text="${ticket.statusLevel.displayName}"></td>
+</tr>
+
 </body>
 </html>

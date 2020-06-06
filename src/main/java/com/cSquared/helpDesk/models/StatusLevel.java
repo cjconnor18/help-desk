@@ -2,7 +2,6 @@ package com.cSquared.helpDesk.models;
 
 public enum StatusLevel {
     UNASSIGNED("Unassigned"),
-    ASSIGNED("Assigned"),
     ACTIVE("Active"),
     CLOSED("Closed");
 

@@ -27,6 +27,9 @@ public class Ticket extends AbstractEntity {
     @ManyToOne
     private User userCreated;
 
+    @ManyToOne
+    private User techAssigned;
+
     private SeverityLevel severity;
 
     private StatusLevel statusLevel;
@@ -98,6 +101,14 @@ public class Ticket extends AbstractEntity {
 
     public void setDateCreatedString(String dateCreatedString) {
         this.dateCreatedString = dateCreatedString;
+    }
+
+    public User getTechAssigned() {
+        return techAssigned;
+    }
+
+    public void setTechAssigned(User techAssigned) {
+        this.techAssigned = techAssigned;
     }
 
     @Override

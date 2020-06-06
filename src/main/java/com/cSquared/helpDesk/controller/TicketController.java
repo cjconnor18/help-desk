@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import javax.websocket.server.PathParam;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RequestMapping("ticket")
@@ -33,9 +35,28 @@ public class TicketController {
         User user = authenticationController.getUserFromSession(session);
 
         if(user.getAccessLevel().equals(AccessLevel.ADMIN)) {
-            model.addAttribute("tickets", ticketRepository.findAll());
+            List<Ticket> allOpenTickets = new ArrayList<>();
+            List<Ticket> allClosedTickets = new ArrayList<>();
+            for(Ticket ticket : ticketRepository.findAll()) {
+                if(ticket.getStatusLevel().equals(StatusLevel.CLOSED)) {
+                    allClosedTickets.add(ticket);
+                } else {
+                    allOpenTickets.add(ticket);
+                }
+            }
+
+            model.addAttribute("tickets", allOpenTickets);
+            model.addAttribute("closedTickets", allClosedTickets);
+            model.addAttribute("unassignedTickets", ticketRepository.findByStatusLevel(StatusLevel.UNASSIGNED));
+
+        } else if(user.getAccessLevel().equals(AccessLevel.TECH)) {
+            model.addAttribute("unassignedTickets", ticketRepository.findByStatusLevel(StatusLevel.UNASSIGNED));
+            model.addAttribute("tickets", user.allOpenTickets());
+            model.addAttribute("closedTickets", user.allClosedTickets());
+
         } else {
-            model.addAttribute("tickets", user.getTickets());
+            model.addAttribute("tickets", user.allOpenTickets());
+            model.addAttribute("closedTickets", user.allClosedTickets());
         }
 
         model.addAttribute("user", user);
@@ -72,26 +93,49 @@ public class TicketController {
         Optional<Ticket> ticket = ticketRepository.findById(ticketId);
 
 
-        if(ticket.isEmpty() || (!ticket.get().getUserCreated().equals(user) && !user.isAdmin())){
+        if(ticket.isEmpty() || (!ticket.get().getUserCreated().equals(user) && !user.getAccessLevel().equals(AccessLevel.ADMIN))){
             return "redirect:/ticket/";
         }
 
+        model.addAttribute("admin", AccessLevel.ADMIN);
+        model.addAttribute("tech", AccessLevel.TECH);
+        model.addAttribute("user", user);
+        model.addAttribute("techUsers", userRepository.findAllByAccessLevel(AccessLevel.TECH));
         model.addAttribute("ticket", ticket.get());
         model.addAttribute("statusLevels", StatusLevel.values());
         return "ticket/view";
     }
 
     @PostMapping("view/{ticketId}")
-    public String updateTicket (@PathVariable int ticketId, @RequestParam StatusLevel statusLevelChosen, Model model) {
+    public String updateTicket (@PathVariable int ticketId,
+                                @RequestParam(required = false) Boolean isClosed,
+                                @RequestParam(required = false) Integer userId,
+                                Model model) {
         Optional<Ticket> ticket = ticketRepository.findById(ticketId);
         if(ticket.isEmpty()) {
             return "ticket/index";
         }
         Ticket currentTicket = ticket.get();
-        currentTicket.setStatusLevel(statusLevelChosen);
-        ticketRepository.save(currentTicket);
+        if(isClosed != null) {
+            if(isClosed) {
+                currentTicket.setStatusLevel(StatusLevel.CLOSED);
+                ticketRepository.save(currentTicket);
+            }
+        }
+
+        if(userId != null) {
+            Optional<User> user = userRepository.findById(userId);
+
+            if(user.isPresent()){
+                currentTicket.setTechAssigned(user.get());
+                currentTicket.setStatusLevel(StatusLevel.ACTIVE);
+                ticketRepository.save(currentTicket);
+            }
+        }
+
+
+
 
         return "redirect:/ticket/view/" + ticketId;
-
     }
 }

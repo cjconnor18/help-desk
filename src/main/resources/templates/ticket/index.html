@@ -7,27 +7,43 @@
 <body>
 <div class="headerNav" th:replace="fragments :: headerNav"></div>
 <main>
-    <table>
-        <tr>
-            <th>Ticket Number</th>
-            <th>Date</th>
-            <th>Severity</th>
-            <th>Title</th>
-            <th>User</th>
-            <th>Status</th>
-        </tr>
-        <th:block th:each="ticket : ${tickets}">
-            <tr>
-                <td th:text="${ticket.id}"></td>
-                <td th:text="${ticket.dateCreatedString}"></td>
-                <td th:text="${ticket.severity.displayName}"></td>
-                <td><a th:href="@{/ticket/view/{id}(id=${ticket.id})}" th:text="${ticket.title}"></a></td>
-                <td th:text="${ticket.userCreated.userProfile.firstName}"></td>
-                <td th:text="${ticket.statusLevel.displayName}"></td>
-            </tr>
-        </th:block>
+    <div th:unless='${user.accessLevel.displayName.equals("User")}'>
+        <h2>Unassigned Tickets</h2>
+        <table>
+            <tr th:replace="fragments :: trHeaders"></tr>
+            <th:block th:each="ticket: ${unassignedTickets}">
+                <tr th:replace="fragments :: trTicket"></tr>
+            </th:block>
+        </table>
+    </div>
 
-    </table>
+    <div>
+        <h2>
+            <span th:if='${user.accessLevel.displayName.equals("Administrator")}'>All Open Tickets</span>
+            <span th:unless='${user.accessLevel.displayName.equals("Administrator")}'>My Open Tickets</span>
+        </h2>
+        <table>
+            <tr th:replace="fragments :: trHeaders">
+            </tr>
+            <th:block th:each="ticket : ${tickets}">
+                <tr th:replace="fragments :: trTicket">
+                </tr>
+            </th:block>
+        </table>
+    </div>
+
+    <div>
+        <h2>Closed Tickets</h2>
+        <table>
+            <tr th:replace="fragments :: trHeaders">
+            </tr>
+            <th:block th:each="ticket : ${closedTickets}">
+                <tr th:replace="fragments :: trTicket">
+                </tr>
+            </th:block>
+        </table>
+    </div>
+
 
 </main>
 </body>

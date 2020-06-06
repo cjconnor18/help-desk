@@ -2,7 +2,8 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org/">
 <head>
     <div th:replace="fragments :: head"></div>
-    <link rel="stylesheet" th:href="@{/css/home.css}">
+    <link rel="stylesheet" th:href="@{/css/ticketview.css}">
+
 </head>
 <body>
 <div class="headerNav" th:replace="fragments :: headerNav"></div>
@@ -13,19 +14,44 @@
 
     <p>Creator: <span th:text="${ticket.userCreated.userProfile.firstName} + ' ' + ${ticket.userCreated.userProfile.lastName}"></span></p>
     <p>Status: <span th:text="${ticket.statusLevel.displayName}"></span></p>
+    <p>Assigned Technician:
+        <span th:if='${ticket.statusLevel.displayName.equals("Active") ||
+                     ticket.statusLevel.displayName.equals("Closed")}'
+              th:text="${ticket.techAssigned.userProfile.firstName} + ' ' +${ticket.techAssigned.userProfile.lastName}">
+        </span>
+        <span th:if='${ticket.statusLevel.displayName.equals("Unassigned")}'>User Not Assigned</span></p>
     <p>Description: <span th:text="${ticket.description}"></span></p>
 
-    <form th:action="@{/ticket/view/{id}(id=${ticket.id})}" method="post">
-        <Label>
-            <select name="statusLevelChosen">
-                <th:block th:each="statusLevel : ${statusLevels}">
-                    <option th:if="${statusLevel.equals(ticket.statusLevel)}" th:value="${statusLevel}" th:text="${statusLevel.displayName}" selected></option>
-                    <option th:unless="${statusLevel.equals(ticket.statusLevel)}" th:value="${statusLevel}" th:text="${statusLevel.displayName}"></option>
-                </th:block>
-            </select>
-        </Label>
-        <input type="submit" value="Change Status">
+    <form method="post">
+        <input type="hidden" name="isClosed" value="true">
+        <input type="submit" value="Close Ticket">
     </form>
+
+    <div th:if='${user.AccessLevel == tech &&
+                ticket.statusLevel.displayName.equals("Unassigned")}'>
+        <form method="post">
+            <input type="hidden" name="userId" th:value="${user.id}">
+            <input type="submit" value="Assign Myself to Ticket">
+        </form>
+    </div>
+
+
+    <div th:if='${user.AccessLevel == admin &&
+                ticket.statusLevel.displayName.equals("Unassigned")}'>
+        <button onclick="clickAssignTechForm()">Assign Technician</button>
+        <form  id="assignTechForm"th:action="@{/ticket/view/{id}(id=${ticket.id})}" method="post">
+            <Label>
+                <select name="userId">
+                    <th:block th:each="techUser : ${techUsers}">
+                        <option th:value="${techUser.id}" th:text="${techUser.userProfile.firstName} +' '+ ${techUser.userProfile.lastName}"></option>
+                    </th:block>
+                </select>
+            </Label>
+            <input type="submit" value="Change Status">
+        </form>
+    </div>
+
 </main>
+<script th:src="@{/js/techview.js}"></script>
 </body>
 </html>
