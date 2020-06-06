@@ -93,7 +93,7 @@ public class TicketController {
         Optional<Ticket> ticket = ticketRepository.findById(ticketId);
 
 
-        if(ticket.isEmpty() || (!ticket.get().getUserCreated().equals(user) && !user.getAccessLevel().equals(AccessLevel.ADMIN))){
+        if(ticket.isEmpty() || (!ticket.get().getUserCreated().equals(user) && user.getAccessLevel().equals(AccessLevel.ADMIN))){
             return "redirect:/ticket/";
         }
 

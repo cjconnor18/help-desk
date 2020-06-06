@@ -2,10 +2,23 @@
     margin-bottom: 3em;
 }
 
-table {
-    width: 100%;
+main{
+    margin: 0 20%;
 }
 
+table, td, th {
+    border: 1px solid black;
+}
+table{
+    border-collapse: collapse;
+    width: 100%;
+}
+th{
+    height: 2em;
+}
+td{
+    height: 3em;
+}
 h2 {
     text-align: center;
 }
@@ -19,10 +32,10 @@ h2 {
 }
 
 .severity, .status{
-    width: 15%;
+    width: 13%;
 }
 .user{
-    width: 23%;
+    width: 27%;
 }
 
 .dateTd, .severityTd, .statusTd, .userTd {
