@@ -45,11 +45,12 @@ public class UsersController {
         User currentUser = authenticationController.getUserFromSession(session);
         Optional<User> user = userRepository.findById(userId);
         if(user.isEmpty()) {
-            return "users/index";
+            return "redirect:/users/";
         }
-        if(currentUser.getAccessLevel() == AccessLevel.USER) {
+        if(currentUser.getAccessLevel() == AccessLevel.USER ||
+        currentUser.getAccessLevel() == AccessLevel.TECH) {
             if(currentUser.getId() != user.get().getId()) {
-                return "users/index";
+                return "redirect:/users/";
             } else {
                 model.addAttribute("user", currentUser);
             }
@@ -68,13 +69,33 @@ public class UsersController {
 
         Optional<User> optUser = userRepository.findById(userId);
         if(optUser.isEmpty()) {
-            return "view/";
+            return "redirect:/users/";
         }
         User user = optUser.get();
         user.setAccessLevel(accessLevel);
         userRepository.save(user);
         return "redirect:/users/view/" + userId;
     }
+
+    @GetMapping("edit/{userId}")
+    public String editUser(@PathVariable Integer userId, Model model, HttpSession session) {
+        User userLoggedIn = authenticationController.getUserFromSession(session);
+        Optional<User> getUser = userRepository.findById(userId);
+        if(getUser.isEmpty()) {
+            return "redirect:/users/";
+        }
+        User currentUser = getUser.get();
+        if(userLoggedIn.getId() != userId){
+            if(!userLoggedIn.getAccessLevel().equals(AccessLevel.ADMIN)) {
+                return "redirect:/users/";
+            }
+        }
+
+        model.addAttribute("user", currentUser);
+        return "users/edit";
+    }
+
+    
 
 
 

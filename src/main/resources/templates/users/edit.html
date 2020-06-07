@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <div th:replace="fragments :: head"></div>
+    <link rel="stylesheet" th:href="@{/css/userview.css}">
+</head>
+<body>
+<div class="headerNav" th:replace="fragments :: headerNav"></div>
+<main>
+    <form method="post">
+        <label>First Name: <input type="text" th:field="${user.userProfile.firstName}"></label>
+        <label>Last Name: <input type="text" th:field="${user.userProfile.lastName}"></label>
+        <label>Phone Number: <input type="text" th:field="${user.userProfile.phoneNumber}"></label>
+        <label>Email: <input type="text" th:field="${user.userProfile.email}"></label>
+
+        <input type="submit" value="Save Changes">
+    </form>
+</main>
+
+</body>
+</html>
