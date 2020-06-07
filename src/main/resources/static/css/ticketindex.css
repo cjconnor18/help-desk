@@ -7,7 +7,7 @@ main{
 }
 
 table, td, th {
-    border: 1px solid black;
+    border: 1px solid gray;
 }
 table{
     border-collapse: collapse;
@@ -21,6 +21,7 @@ td{
 }
 h2 {
     text-align: center;
+    padding-bottom: .2em;
 }
 
 .title{
@@ -36,6 +37,9 @@ h2 {
 }
 .user{
     width: 27%;
+}
+.titleTd{
+    padding-left: .5em;
 }
 
 .dateTd, .severityTd, .statusTd, .userTd {
