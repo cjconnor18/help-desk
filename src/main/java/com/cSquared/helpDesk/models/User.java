@@ -83,6 +83,10 @@ public class User extends AbstractEntity{
         this.accessLevel = accessLevel;
     }
 
+    public String getPwHash() {
+        return pwHash;
+    }
+
     public List<Ticket> getTechTickets() {
         return techTickets;
     }

@@ -4,13 +4,17 @@ import com.cSquared.helpDesk.data.UserRepository;
 import com.cSquared.helpDesk.models.AccessLevel;
 import com.cSquared.helpDesk.models.Ticket;
 import com.cSquared.helpDesk.models.User;
+import com.cSquared.helpDesk.models.UserProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -91,11 +95,42 @@ public class UsersController {
             }
         }
 
-        model.addAttribute("user", currentUser);
+        model.addAttribute("user", currentUser.getUserProfile());
         return "users/edit";
     }
 
-    
+    @PostMapping("edit/{userId}")
+    public String processEdit(@PathVariable Integer userId,
+                              @Valid UserProfile user,
+                              BindingResult result,
+                              HttpSession session){
+        if(result.hasErrors()) {
+            return "redirect:/users/edit/" + userId;
+        }
+        User userLoggedIn = authenticationController.getUserFromSession(session);
+        Optional<User> getUser = userRepository.findById(userId);
+        if(getUser.isEmpty()) {
+            return "redirect:/users/";
+        }
+
+        User currentUser = getUser.get();
+        if(userLoggedIn.getId() != userId) {
+            if(userLoggedIn.getAccessLevel() != AccessLevel.ADMIN) {
+                return "redirect:/users/";
+            }
+        }
+        if(currentUser.getUserProfile() != user) {
+            currentUser.getUserProfile().setFirstName(user.getFirstName());
+            currentUser.getUserProfile().setLastName(user.getLastName());
+            currentUser.getUserProfile().setPhoneNumber(user.getPhoneNumber());
+            currentUser.getUserProfile().setEmail(user.getEmail());
+        }
+
+        userRepository.save(currentUser);
+        return "redirect:/users/view/" + userId;
+    }
+
+
 
 
 

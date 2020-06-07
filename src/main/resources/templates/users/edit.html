@@ -7,11 +7,16 @@
 <body>
 <div class="headerNav" th:replace="fragments :: headerNav"></div>
 <main>
-    <form method="post">
-        <label>First Name: <input type="text" th:field="${user.userProfile.firstName}"></label>
-        <label>Last Name: <input type="text" th:field="${user.userProfile.lastName}"></label>
-        <label>Phone Number: <input type="text" th:field="${user.userProfile.phoneNumber}"></label>
-        <label>Email: <input type="text" th:field="${user.userProfile.email}"></label>
+    <form method="post" th:object="${user}">
+
+
+
+        <label>First Name: <input type="text" th:field="${user.firstName}"></label>
+            <p th:errors="${user.firstName}"></p>
+        <label>Last Name: <input type="text" th:field="${user.lastName}"></label>
+            <p th:errors="${user.lastName}"></p>
+        <label>Phone Number: <input type="text" th:field="${user.phoneNumber}"></label>
+        <label>Email: <input type="text" th:field="${user.email}"></label>
 
         <input type="submit" value="Save Changes">
     </form>
