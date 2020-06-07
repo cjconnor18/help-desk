@@ -13,12 +13,10 @@ table{
     border-collapse: collapse;
     width: 100%;
 }
-th{
+th, td{
     height: 2em;
 }
-td{
-    height: 3em;
-}
+
 h2 {
     text-align: center;
     padding-bottom: .2em;

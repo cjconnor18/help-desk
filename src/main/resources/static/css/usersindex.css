@@ -1,0 +1,37 @@
+main {
+    margin: 0 20%;
+}
+h1{
+    padding-bottom: .2em;
+}
+table, th, td {
+    border: 1px solid gray;
+}
+table{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+td, th{
+    height: 2em;
+}
+
+.name, .email {
+    width: 35%;
+}
+
+.phone{
+    width: 13%;
+}
+
+.accessLevel{
+    width: 17%;
+}
+
+.nameTd{
+    padding-left: .5em;
+}
+
+.phoneTd, .emailTd, .accessLevelTd{
+    text-align: center;
+}

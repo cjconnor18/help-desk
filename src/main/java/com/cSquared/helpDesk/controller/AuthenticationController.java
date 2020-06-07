@@ -46,7 +46,9 @@ public class AuthenticationController {
         session.setAttribute(userSessionKey, user.getId());
     }
     @GetMapping
-    public String displayPageAfterLogin() {
+    public String displayPageAfterLogin(HttpSession session, Model model) {
+        User user = getUserFromSession(session);
+        model.addAttribute("user", user);
         return "index";
     }
 
@@ -56,6 +58,7 @@ public class AuthenticationController {
         model.addAttribute(new UserProfile());
         return "register";
     }
+
 
     @PostMapping("/register")
     public String processRegistrationForm(@ModelAttribute @Valid UserProfile userProfile,

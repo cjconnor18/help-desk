@@ -15,7 +15,7 @@
     <ul>
         <li><a href="ticket/">View Tickets</a></li>
         <li><a href="ticket/create">Create Ticket</a></li>
-        <li><a href="user/">User Profile</a></li>
+        <li><a th:href="@{/users/view/{id}(id=${user.id})}">User Profile</a></li>
     </ul>
 </main>
 </body>

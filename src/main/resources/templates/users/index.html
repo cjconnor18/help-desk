@@ -3,6 +3,8 @@
 <head>
     <div th:replace="fragments :: head"></div>
     <link rel="stylesheet" th:href="@{/css/formErrors.css}">
+    <link rel="stylesheet" th:href="@{/css/usersindex.css}">
+
 </head>
 
 <body>
@@ -14,17 +16,17 @@
 
     <table>
         <tr>
-            <th>Name</th>
-            <th>Phone</th>
-            <th>Email</th>
-            <th>Access Level</th>
+            <th class="name">Name</th>
+            <th class="phone">Phone</th>
+            <th class="email">Email</th>
+            <th class="accessLevel">Access Level</th>
         </tr>
         <tr th:each="user : ${users}">
-            <td><a th:href="@{/users/view/{id}(id=${user.id})}"
+            <td class="nameTd"><a th:href="@{/users/view/{id}(id=${user.id})}"
                    th:text="${user.userProfile.firstName} + ' ' + ${user.userProfile.lastName}"></a></td>
-            <td th:text="${user.userProfile.phoneNumber}"></td>
-            <td th:text="${user.userProfile.email}"></td>
-            <td th:text="${user.accessLevel.displayName}"></td>
+            <td class="phoneTd" th:text="${user.userProfile.phoneNumber}"></td>
+            <td class="emailTd" th:text="${user.userProfile.email}"></td>
+            <td class="accessLevelTd" th:text="${user.accessLevel.displayName}"></td>
         </tr>
     </table>
     <!--<p th:errors="${userAccess}"></p>-->
