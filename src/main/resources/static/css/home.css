@@ -4,9 +4,14 @@ h1{
 }
 main{
   margin: 0 25%;
-
 }
-
+.errors{
+    font-size: .9em;
+    color: red;
+}
+.homeListItem{
+    padding: .13em 0;
+}
 form{
   margin: 0 25%;
 }

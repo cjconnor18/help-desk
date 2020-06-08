@@ -7,13 +7,16 @@
 <body>
 <div class="headerNav" th:replace="fragments :: headerNav"></div>
 <main>
+    <h1>Create Ticket</h1>
     <form method="post">
         <label>Title<input type="text" th:field="${ticket.title}"></label>
+        <p class="errors" th:errors="${ticket.title}"></p>
         <label>Description<input type="text" th:field="${ticket.description}"></label>
+        <p class="errors" th:errors="${ticket.description}"></p>
         <label>Severity <select th:field="${ticket.severity}">
             <option th:each="type : ${types}" th:value="${type}" th:text="${type.displayName}"></option>
         </select> </label>
-        <input type="submit">
+        <input class="submit" type="submit">
 
     </form>
 

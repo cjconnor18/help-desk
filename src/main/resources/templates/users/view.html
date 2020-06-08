@@ -7,6 +7,7 @@
 <body>
 <div class="headerNav" th:replace="fragments :: headerNav"></div>
 <main>
+    <h1 th:text="${user.userProfile.firstName} +' '+ ${user.userProfile.lastName}"></h1>
     <p>First Name: <span th:text="${user.userProfile.firstName}"></span></p>
     <p>Last Name: <span th:text="${user.userProfile.lastName}"></span></p>
     <p>Phone Number: <span th:text="${user.userProfile.phoneNumber}"></span></p>

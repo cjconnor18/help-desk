@@ -75,6 +75,8 @@ public class TicketController {
                                     Errors errors, HttpServletRequest request,
                                     HttpSession session, Model model) {
         if(errors.hasErrors()) {
+            model.addAttribute("ticket", ticket);
+            model.addAttribute("types", SeverityLevel.values());
             return "ticket/create";
         }
         User user = authenticationController.getUserFromSession(session);
@@ -93,7 +95,10 @@ public class TicketController {
         Optional<Ticket> ticket = ticketRepository.findById(ticketId);
 
 
-        if(ticket.isEmpty() || (!ticket.get().getUserCreated().equals(user) && user.getAccessLevel().equals(AccessLevel.ADMIN))){
+        if(ticket.isEmpty() || (!ticket.get().getUserCreated().equals(user) &&
+                !user.getAccessLevel().equals(AccessLevel.ADMIN) &&
+                !ticket.get().getTechAssigned().equals(user) &&
+                !ticket.get().getStatusLevel().equals(StatusLevel.UNASSIGNED))){
             return "redirect:/ticket/";
         }
 
@@ -113,6 +118,7 @@ public class TicketController {
                                 Model model) {
         Optional<Ticket> ticket = ticketRepository.findById(ticketId);
         if(ticket.isEmpty()) {
+
             return "ticket/index";
         }
         Ticket currentTicket = ticket.get();

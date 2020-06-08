@@ -8,6 +8,7 @@
 <body>
 <div class="headerNav" th:replace="fragments :: headerNav"></div>
 <main>
+    <h1 th:text="${ticket.title}"></h1>
     <p>Ticket Number: <span th:text="${ticket.id}"></span></p>
     <p>Date Created: <span th:text="${ticket.dateCreatedString}"></span></p>
     <p>Title: <span th:text="${ticket.title}"></span></p>
@@ -20,26 +21,27 @@
               th:text="${ticket.techAssigned.userProfile.firstName} + ' ' +${ticket.techAssigned.userProfile.lastName}">
         </span>
         <span th:if='${ticket.statusLevel.displayName.equals("Unassigned")}'>User Not Assigned</span></p>
-    <p>Description: <span th:text="${ticket.description}"></span></p>
+    <p>Description:</p>
+        <p class="description" th:text="${ticket.description}"></p>
 
-    <form method="post">
+    <form class="noPaddingLeft" method="post">
         <input type="hidden" name="isClosed" value="true">
-        <input type="submit" value="Close Ticket">
+        <input class="submit" type="submit" value="Close Ticket">
     </form>
 
     <div th:if='${user.AccessLevel == tech &&
                 ticket.statusLevel.displayName.equals("Unassigned")}'>
-        <form method="post">
+        <form class="noPaddingLeft" method="post">
             <input type="hidden" name="userId" th:value="${user.id}">
-            <input type="submit" value="Assign Myself to Ticket">
+            <input class="submit" type="submit" value="Assign Myself to Ticket">
         </form>
     </div>
 
 
     <div th:if='${user.AccessLevel == admin &&
                 ticket.statusLevel.displayName.equals("Unassigned")}'>
-        <button onclick="clickAssignTechForm()">Assign Technician</button>
-        <form  id="assignTechForm"th:action="@{/ticket/view/{id}(id=${ticket.id})}" method="post">
+        <button class="submit" onclick="clickAssignTechForm()">Assign Technician</button>
+        <form  id="assignTechForm" th:action="@{/ticket/view/{id}(id=${ticket.id})}" method="post">
             <Label>
                 <select name="userId">
                     <th:block th:each="techUser : ${techUsers}">
@@ -47,7 +49,7 @@
                     </th:block>
                 </select>
             </Label>
-            <input type="submit" value="Change Status">
+            <input class="submit" type="submit" value="Assign This Tech">
         </form>
     </div>
 

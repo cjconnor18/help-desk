@@ -100,12 +100,14 @@ public class UsersController {
     }
 
     @PostMapping("edit/{userId}")
-    public String processEdit(@PathVariable Integer userId,
-                              @Valid UserProfile user,
-                              BindingResult result,
-                              HttpSession session){
-        if(result.hasErrors()) {
-            return "redirect:/users/edit/" + userId;
+    public String processEdit(@ModelAttribute @Valid UserProfile user,
+                              Errors errors,
+                              @PathVariable Integer userId,
+                              HttpSession session,
+                              Model model){
+        if(errors.hasErrors()) {
+            model.addAttribute("user", user);
+            return "users/edit";
         }
         User userLoggedIn = authenticationController.getUserFromSession(session);
         Optional<User> getUser = userRepository.findById(userId);
