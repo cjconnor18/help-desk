@@ -1,3 +1,16 @@
 #changeForm{
   display: none;
 }
+.noPaddingLeft{
+    padding-left: 0;
+}
+form{
+    margin: 0;
+    padding-left: 1em;
+}
+.submit{
+margin: 1em auto 2em 0;
+}
+p{
+    padding: .3em 0;
+}

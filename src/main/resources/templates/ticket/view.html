@@ -24,7 +24,7 @@
     <p>Description:</p>
         <p class="description" th:text="${ticket.description}"></p>
 
-    <form class="noPaddingLeft" method="post">
+    <form th:unless='${ticket.statusLevel.displayName.equals("Closed")}' class="noPaddingLeft" method="post">
         <input type="hidden" name="isClosed" value="true">
         <input class="submit" type="submit" value="Close Ticket">
     </form>

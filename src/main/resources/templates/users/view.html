@@ -13,14 +13,19 @@
     <p>Phone Number: <span th:text="${user.userProfile.phoneNumber}"></span></p>
     <p>Email: <span th:text="${user.userProfile.email}"></span></p>
     <p>Access Level: <span th:text="${user.accessLevel.displayName}"></span></p>
-    <button th:if="${isAdmin}" onclick="clickedChangeFormButton()">Change Access Level</button>
+    <form class="noPaddingLeft" th:action="@{/users/edit/{id}(id=${user.id})}" method="get">
+        <button class="submit">Edit User</button>
+    </form>
+
+    <button class="submit" th:if="${isAdmin}" onclick="clickedChangeFormButton()">Change Access Level</button>
     <form method="post" th:action="@{/users/view/{id}(id=${user.id})}" id="changeForm">
 
-        <label>Access Level<select name="accessLevel">
+        <label>Access Level <select name="accessLevel">
             <option th:each="level : ${levels}" th:value="${level}" th:text="${level.displayName}"></option>
         </select> </label>
-        <input type="submit" value="Submit Change">
+        <input class="submit" type="submit" value="Submit Change">
     </form>
+
 </main>
 <script th:src="@{/js/userview.js}"></script>
 </body>
